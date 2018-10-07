@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# IntelliJ idea projects
+.idea/
+
+# Cmake build folder
+cmake-build-debug/
