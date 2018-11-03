@@ -14,16 +14,16 @@ int main () {
 	pwm.init(1,0x40);
 	usleep(1000 * 100);
 	printf ("Setting frequency..");
-	pwm.setPWMFreq (61);
+	pwm.setPWMFreq (60);
 	usleep(1000 * 1000);
 
 	int count = 0;
 	while (count++<10) {
 		;
-		pwm.setPWM(0,0,150);	
+		pwm.setPWM(12,0,600);	
 		usleep(1000 * 1000);
 		
-		pwm.setPWM(0,0,600);
+		pwm.setPWM(12,0,2000);
 		
 		usleep(1000 * 1000);
 	}
