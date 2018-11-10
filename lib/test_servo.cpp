@@ -7,7 +7,7 @@
 
 using namespace std;
 int main () {
-
+	
 	printf ("Testing testing\n");
 	//make sure you use the right address values.
 	PCA9685 pwm;
@@ -19,7 +19,7 @@ int main () {
 
 	int count = 0;
 	while (count++<10) {
-		;
+		
 		pwm.setPWM(12,0,600);	
 		usleep(1000 * 1000);
 		

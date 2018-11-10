@@ -3,4 +3,4 @@ project(Bullseye)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Bullseye robot.cpp)
+add_executable(Bullseye robot.cpp lib/PCA9685.cpp drivers/Adafruit16ChPwmHatDriver.cpp)
