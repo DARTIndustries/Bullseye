@@ -36,3 +36,6 @@
 
 # Cmake build folder
 cmake-build-debug/
+
+# Visual Studio
+.vs/
