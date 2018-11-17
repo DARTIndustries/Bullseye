@@ -3,8 +3,8 @@
 //DART
 //author: Adam (everyone)
 
-#include "Adafruit16ChPwmHatDriver.h"
-#include "../lib/PCA9685.h"
+#include <drivers/Adafruit16ChPwmHatDriver.h>
+#include <lib/PCA9685.h>
 
 Adafruit16ChPwmHatDriver::Adafruit16ChPwmHatDriver(int bus, int address) {
 	_pwm.init(bus, address);

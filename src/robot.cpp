@@ -1,6 +1,6 @@
 #include <iostream>
-#include "./drivers/AbstractPwmDriver.h"
-#include "./drivers/Adafruit16ChPwmHatDriver.h"
+#include <drivers/AbstractPwmDriver.h>
+#include <drivers/Adafruit16ChPwmHatDriver.h>
 
 int main() {
     std::cout << "WE ARE DART!" << std::endl;
