@@ -3,11 +3,11 @@
 
 ServoController::ServoController(AbstractPwmDriver* pwm_driver) {
 	_pwmDriver = pwm_driver; 
+	_pwmDriver->setFrequency(FREQ);
 }
 
 ServoController::execute(ServoCommand* cmd) {
 	double pos = cmd->position;
-	_pwmDriver->setFrequency(FREQ);
 	_pwmDriver->setDutyCycle(VERT_PIN, self.setValue(pos)); 
 }
 

@@ -5,6 +5,7 @@
 //find lib for servo 
 #include <commands/AbstractCommand.h>
 #include <drivers/AbstractPwmDriver.h>
+#include <commands/ServoCommand.h>
 #include "AbstractController.h"
 
 #define FREQ 60
@@ -23,6 +24,4 @@ public:
 	double setValue(double value); 
 private:
 	AbstractPwmDriver* _pwmDriver;
-}
-
-	
+};
