@@ -6,7 +6,7 @@
 #include <commands/AbstractCommand.h>
 #include <drivers/AbstractPwmDriver.h>
 #include <commands/ServoCommand.h>
-#include "AbstractController.h"
+#include <controllers/AbstractController.h>
 
 #define FREQ 60
 
@@ -17,7 +17,7 @@
 #define MID 332
 #define UPPER 540
 
-class ServoController: public AbstractController {
+class ServoController{
 public:
 	ServoController(AbstractPwmDriver* pwm_driver);
 	void execute(ServoCommand* cmd);

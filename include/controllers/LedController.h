@@ -2,6 +2,7 @@
 //11/17/2018
 //DART
 //author: Gurleen and Kenneth
+#pragma once
 
 #include<AbstractController.h>
 #include<commands/AbstractCommand.h>
@@ -14,7 +15,7 @@
 #define BLUE_PIN 14
 
 
-class LedController: public AbstractCommand {
+class LedController{
 public:
     LedController(AbstractPwmDriver* pwmDriver);
     void execute(LedCommand* command);
