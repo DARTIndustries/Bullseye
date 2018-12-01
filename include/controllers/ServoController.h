@@ -17,7 +17,7 @@
 #define MID 332
 #define UPPER 540
 
-class ServoController: public ServoController {
+class ServoController: public AbstractController {
 public:
 	ServoController(AbstractPwmDriver* pwm_driver);
 	void execute(ServoCommand* cmd);
