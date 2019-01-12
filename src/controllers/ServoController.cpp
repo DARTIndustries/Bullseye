@@ -8,12 +8,12 @@ ServoController::ServoController(AbstractPwmDriver* pwm_driver) {
 
 ServoController::execute(ServoCommand* cmd) {
 	double pos = cmd->position;
-	_pwmDriver->setDutyCycle(VERT_PIN, self.setValue(pos)); 
+	_pwmDriver->setDutyCycle(VERT_PIN, this.setValue(pos));
 }
 
 ServoController::setValue(double value){
 	double outVal = 0; 
-
+	
 	if(value > 1 || value < -1){
 		throw std::invalid_argument("Value out of bounds, [-1, 1]"); 
 	}
@@ -25,7 +25,7 @@ ServoController::setValue(double value){
 	*/
 
 	if (value > 0){
-		outVal = (value * (UPPER - MID)) + MID
+		outVal = (value * (UPPER - MID)) + MID;
 	}
 	else {
 		outVal = (value * (MID - LOWER)) + MID;
