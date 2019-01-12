@@ -8,28 +8,10 @@ ServoController::ServoController(AbstractPwmDriver* pwm_driver) {
 
 void ServoController::execute(ServoCommand* cmd) {
 	double pos = cmd->position;
-	_pwmDriver->setDutyCycle(VERT_PIN, this->setValue(pos));
-}
-
-double ServoController::setValue(double value){
-	double outVal = 0; 
-	
-	if(value > 1 || value < -1){
-		throw std::invalid_argument("Value out of bounds, [-1, 1]"); 
+	if(pos > 1 || pos < -1) {
+		// TODO: Add exception
 	}
-
-	/*==Scale the input using a piecewise function===
-	 0 = mid
-	 then  0 -> 1 scale linearly to mid->upper
-	 then - 1 -> 0 scale linearly to lower->mid
-	*/
-
-	if (value > 0){
-		outVal = (value * (UPPER - MID)) + MID;
-	}
-	else {
-		outVal = (value * (MID - LOWER)) + MID;
-	}
-
-	return outVal; 
+	// Scale value from -1 to 1 to percentage
+	pos = (pos + 1) / 2.0;
+	_pwmDriver->setDutyCycle(VERT_PIN, pos);
 }
