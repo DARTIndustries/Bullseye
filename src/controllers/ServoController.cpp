@@ -8,7 +8,7 @@ ServoController::ServoController(AbstractPwmDriver* pwm_driver) {
 
 void ServoController::execute(ServoCommand* cmd) {
 	double pos = cmd->position;
-	_pwmDriver->setDutyCycle(VERT_PIN, this.setValue(pos));
+	_pwmDriver->setDutyCycle(VERT_PIN, this->setValue(pos));
 }
 
 double ServoController::setValue(double value){
