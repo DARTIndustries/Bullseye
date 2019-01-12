@@ -6,12 +6,12 @@ ServoController::ServoController(AbstractPwmDriver* pwm_driver) {
 	_pwmDriver->setFrequency(FREQ);
 }
 
-ServoController::execute(ServoCommand* cmd) {
+void ServoController::execute(ServoCommand* cmd) {
 	double pos = cmd->position;
 	_pwmDriver->setDutyCycle(VERT_PIN, this.setValue(pos));
 }
 
-ServoController::setValue(double value){
+double ServoController::setValue(double value){
 	double outVal = 0; 
 	
 	if(value > 1 || value < -1){
