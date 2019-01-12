@@ -4,7 +4,7 @@
 //author: Gurleen and Kenneth
 #pragma once
 
-#include<AbstractController.h>
+#include"AbstractController.h"
 #include<commands/AbstractCommand.h>
 #include<drivers/AbstractPwmDriver.h>
 #include<commands/LedCommand.h>
@@ -15,7 +15,7 @@
 #define BLUE_PIN 14
 
 
-class LedController{
+class LedController {
 public:
     LedController(AbstractPwmDriver* pwmDriver);
     void execute(LedCommand* command);
