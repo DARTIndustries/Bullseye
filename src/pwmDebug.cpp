@@ -1,15 +1,17 @@
 // pwmDebug.cpp
 
 #include <iostream>
-#include <drivers/AbstractPwmDriver.h>
-#include <drivers/Adafruit16ChPwmHatDriver.h>
+#include <drivers/MockPwmDriver.h>
+// #include <drivers/AbstractPwmDriver.h>
+// #include <drivers/Adafruit16ChPwmHatDriver.h>
 
 int main() {
     int pin;
     double val;
     std::cout << "Enter pin: ";
     std::cin >> pin;
-    auto pwmDriver = Adafruit16ChPwmHatDriver(1, 0x40); // TODO: Make the 1 a macro
+    // auto pwmDriver = Adafruit16ChPwmHatDriver(1, 0x40); // TODO: Make the 1 a macro
+    auto pwmDriver = MockPwmDriver(1, 0x40);
     pwmDriver.setFrequency(60);
     while(true) {
         std::cout << "Enter duty cycle: ";
