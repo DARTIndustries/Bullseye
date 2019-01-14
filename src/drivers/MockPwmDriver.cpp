@@ -15,5 +15,5 @@ void MockPwmDriver::setFrequency(int frequency) {
 }
 
 void MockPwmDriver::setDutyCycle(int port, double percentDutyCycle) {
-    std::cout << "MockPwmDriver: duty cycle on port " << port << " set to " << percentDutyCycle;
+    std::cout << "MockPwmDriver: duty cycle on port " << port << " set to " << percentDutyCycle << "\n";
 }
