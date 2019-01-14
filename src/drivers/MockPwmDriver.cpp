@@ -7,11 +7,11 @@
 #include <iostream>
 
 MockPwmDriver::MockPwmDriver(int bus, int frequency) {
-    std::cout << "MockPwmDriver: initalized on bus " << bus << " and with frequency " << frequency;
+    std::cout << "MockPwmDriver: initalized on bus " << bus << "\n";
 }
 
 void MockPwmDriver::setFrequency(int frequency) {
-    std::cout << "MockPwmDriver: frequency set to " << frequency;
+    std::cout << "MockPwmDriver: frequency set to " << frequency << "\n";
 }
 
 void MockPwmDriver::setDutyCycle(int port, double percentDutyCycle) {
