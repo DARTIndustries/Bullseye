@@ -5,7 +5,14 @@
 
 #pragma once
 
-class LedCommand {
-public:
-    short r, g, b; // TODO: 8 bit?
+#include<commands/CommandType.h>
+#include<stdint.h>
+
+#pragma pack(push, 1)
+struct LedCommand {
+	uint32_t type; //CommandType 
+	unsigned char r;
+	unsigned char g;
+	unsigned char b; 
 };
+#pragma pack(pop)
