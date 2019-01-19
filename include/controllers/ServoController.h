@@ -15,8 +15,11 @@
 
 class ServoController{
 public:
-	ServoController(AbstractPwmDriver* pwm_driver);
+	ServoController(AbstractPwmDriver* pwm_driver, double low, double mid, double high);
 	void execute(ServoCommand* cmd);
 private:
 	AbstractPwmDriver* _pwmDriver;
+	double _low;
+	double _mid;
+	double _high;
 };

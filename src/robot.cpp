@@ -19,8 +19,8 @@ int main() {
 	//Testing servo controller
 	auto pwmDriver = Adafruit16ChPwmHatDriver(1, 0x40);
 
-	ServoController servo = ServoController(&pwmDriver);
-	ServoCommand com = ServoCommand();
+	ServoController servo = ServoController(&pwmDriver, 0.1, 0.2, 0.3);
+	ServoCommand com; 
 	com.position = 0.5;
 
 	servo.execute(&com);

@@ -1,16 +1,23 @@
 // pwmDebug.cpp
-
+#define ROBOT_MODE 1
 #include <iostream>
-#include <drivers/AbstractPwmDriver.h>
-#include <drivers/Adafruit16ChPwmHatDriver.h>
-
+#if ROBOT_MODE 
+	#include <drivers/AbstractPwmDriver.h>
+	#include <drivers/Adafruit16ChPwmHatDriver.h>
+#else
+	#include <drivers/MockPwmDriver.h>
+#endif 
 int main() {
     int pin;
     double val;
     std::cout << "Enter pin: ";
     std::cin >> pin;
+#if ROBOT_MODE
     auto pwmDriver = Adafruit16ChPwmHatDriver(1, 0x40); // TODO: Make the 1 a macro
-    pwmDriver.setFrequency(60);
+#else
+	auto pwmDriver = MockPwmDriver(1, 0x40);
+#endif
+	pwmDriver.setFrequency(60);
     while(true) {
         std::cout << "Enter duty cycle: ";
         std::cin >> val;

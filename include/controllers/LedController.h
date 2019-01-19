@@ -21,4 +21,5 @@ public:
     void execute(LedCommand* command);
 private:
     AbstractPwmDriver* _pwmDriver;
+
 };
