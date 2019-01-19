@@ -36,8 +36,15 @@
 
 # Cmake build folder
 cmake-build-debug/
+CMakeFiles/
 
 # Visual Studio
 .vs/*
 *.vs/*
 include/\.DS_Store
+
+CMakeCache\.txt
+
+cmake_install\.cmake
+
+Makefile

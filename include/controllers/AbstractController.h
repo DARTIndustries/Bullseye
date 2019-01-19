@@ -6,6 +6,7 @@
 #pragma once
 
 #include<commands/AbstractCommand.h>
+#include<stdexcept>
 
 class AbstractController {
 public:
