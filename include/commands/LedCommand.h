@@ -10,7 +10,7 @@
 
 #pragma pack(push, 1)
 struct LedCommand {
-	uint32_t type; //CommandType 
+	uint32_t type = (uint32_t)CommandType::LED_COMMAND; //CommandType 
 	unsigned char r;
 	unsigned char g;
 	unsigned char b; 
