@@ -2,6 +2,7 @@
 #include <drivers/NetworkingDriver.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 int main(int argc, char const *argv[]) {
@@ -18,7 +19,7 @@ int main(int argc, char const *argv[]) {
     net_driver.read_packet(buffer, sizeof(buffer));
 
     printf("READ: %s\n", buffer);
-    net_driver.send_packet(buffer, sizeof(buffer));
+    net_driver.send_packet(buffer, strlen(buffer));
 
 
 
