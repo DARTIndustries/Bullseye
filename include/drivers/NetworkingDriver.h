@@ -2,8 +2,9 @@
 //3/2/2019
 //DART
 //author: Adam (everyone)
-
 #pragma once
+#include <stdlib.h>
+
 #define PORT 8000 
 
 class NetworkingDriver {
