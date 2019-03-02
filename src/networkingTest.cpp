@@ -3,15 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include<commands/LedCommand.h>
 
 int main(int argc, char const *argv[]) {
-
     char buffer[1024];
-    int num_read;
-    int socket; 
-
-
 
     NetworkingDriver net_driver;
 
@@ -19,8 +14,14 @@ int main(int argc, char const *argv[]) {
     net_driver.read_packet(buffer, sizeof(buffer));
 
     printf("READ: %s\n", buffer);
-    net_driver.send_packet(buffer, strlen(buffer));
 
+    LedCommand led;
+
+    led.b = 5;
+    led.r = 50;
+    led.g = 240;
+
+    net_driver.send_packet(&led, sizeof(led));
 
 
     //TODO: Close?

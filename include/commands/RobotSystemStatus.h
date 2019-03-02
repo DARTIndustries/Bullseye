@@ -1,4 +1,5 @@
 #include<stdint.h>
+#include<commands/CommandType.h>
 
 #pragma pack(push, 1)
 struct RobotSystemStatus {
