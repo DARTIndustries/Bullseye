@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(Bullseye src/robot.cpp src/lib/PCA9685.cpp src/drivers/Adafruit16ChPwmHatDriver.cpp src/drivers/MockPwmDriver.cpp src/commands/LedCommand.cpp src/controllers/LedController.cpp src/controllers/ServoController.cpp)
 add_executable(pwmDebug src/pwmDebug.cpp src/lib/PCA9685.cpp src/drivers/Adafruit16ChPwmHatDriver.cpp src/drivers/MockPwmDriver.cpp src/commands/LedCommand.cpp src/controllers/LedController.cpp src/controllers/ServoController.cpp)
+add_executable(networkingTest src/networkingTest.cpp src/commands/LedCommand.cpp src/controllers/LedController.cpp src/controllers/ServoController.cpp src/drivers/NetworkingDriver.cpp)
 #add_executable(Bullseye ${src_dir})
 target_include_directories(Bullseye PRIVATE include)
 target_include_directories(pwmDebug PRIVATE include)
+target_include_directories(networkingTest PRIVATE include)
