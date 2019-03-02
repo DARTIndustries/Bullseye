@@ -7,7 +7,7 @@
 
 int main(int argc, char const *argv[]) {
 
-    unsigned char buffer[1024];
+    char buffer[1024];
     int num_read;
     int socket; 
 
