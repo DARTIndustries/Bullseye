@@ -18,8 +18,8 @@ int main(int argc, char const *argv[]) {
     LedCommand led;
 
     led.b = 5;
-    led.r = 50;
-    led.g = 240;
+    led.r = 1;
+    led.g = 255;
 
     net_driver.send_packet(&led, sizeof(led));
 
