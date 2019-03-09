@@ -66,4 +66,14 @@ void NetworkingDriver::open_connection() {
         perror("accept"); 
         exit(EXIT_FAILURE); 
     }
+    // else{
+    //     printf("Server connected\n");
+    // }
+}
+
+/** Closes socket
+ * 
+ */
+void NetworkingDriver::close_connection(){
+    close(_socket);
 }
