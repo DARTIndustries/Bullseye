@@ -14,6 +14,6 @@ public:
 	void open_connection();
 	void close_connection();
 	int read_packet(void* buf, size_t buf_size);
-	void send_packet(void* buf, size_t buf_size);
+	int send_packet(void* buf, size_t buf_size);
 };
 

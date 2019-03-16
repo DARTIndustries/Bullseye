@@ -5,70 +5,61 @@
 #include <string.h>
 #include <commands/LedCommand.h>
 #include <thread>
+#include <unistd.h>
 
 //thread that sends "robot status"(struct) to client
 void heartbeat_thread(NetworkingDriver net_driver){
-    std::cout << "heartbeat thread!\n";
+    std::cout << "Heartbeat thread started up " << std::endl;
+    try {
+        while(true) {
 
-    LedCommand led;
+            LedCommand led;
 
-    led.b = 5;
-    led.r = 1;
-    led.g = 255;
+            led.b = 5;
+            led.r = 1;
+            led.g = 255;
 
-    net_driver.send_packet(&led, sizeof(led));
+            net_driver.send_packet(&led, sizeof(led));
+            sleep(1);
+        }
+    } catch (const char* msg){
+        std::cout << "Heartbeat thread: " << msg << std::endl;
+    }
+    std::cout << "Heartbeat exiting " << std::endl;
 }
 
 int main(int argc, char const *argv[]) {
-    char buffer[1024];
-
-	// Removes the random characters at the end
-	memset (buffer, 0, sizeof buffer);
+    char buffer[1024] = {0};
 
     NetworkingDriver net_driver;
     
-	net_driver.open_connection();
-
-    while(true){
+    //Accept loop
+    while(true) {
         
-        //spawn heartbeat thread
-        // std::thread heartbeat (heartbeat_thread, net_driver);
-        // std::cout << "main, foo and bar now execute concurrently...\n";
-        // heartbeat.join();
+        std::cout << "Listening on localhost:8000 " << std::endl;
+        net_driver.open_connection();
+        std::cout << "Client Connected " << std::endl;
 
-		int i = net_driver.read_packet (buffer, sizeof (buffer));
+        std::thread heartbeat(heartbeat_thread, net_driver);
+        
+        try {
+            //Receive messages loop
+            while(true) {
 
-		if (i == 0) { // Client disconnected, exit
-			std::cout << "Connection closed\n";
-			net_driver.close_connection();
-			return 0;
-		} else { // Message received
-			std::cout << "READ: " << buffer << "\n";
+                int bytes_read = net_driver.read_packet (buffer, sizeof (buffer));
 
-			// Clears buffer
-			memset(buffer, 0, sizeof buffer);
+                std::cout << "READ: " << buffer << "\n";
 
-			char test_response[] = "Response\n";
-			net_driver.send_packet (&test_response, sizeof (test_response));
-		}
+            }
+        } catch (const char* msg) {
+            std::cout << "Main: " << msg << std::endl;
+        }
 
-        //example of struct being sent
-        /*LedCommand led;
+        std::cout << "Waiting for heartbeat thread to exit " << std::endl;
+        heartbeat.join();
 
-        led.b = 5;
-        led.r = 1;
-        led.g = 255;
-
-        net_driver.send_packet(&led, sizeof(led));*/
     }
-    
-    //TODO: Close?
 
-    // send(new_socket , hello , strlen(hello) , 0 ); 
-    // printf("Hello message sent\n"); 
     return 0; 
 } 
-
-//TODO: Move to driver code
-
 

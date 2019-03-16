@@ -5,6 +5,8 @@
 #include <netinet/in.h> 
 #include <string.h> 
 #include <drivers/NetworkingDriver.h>
+#include <exception>
+#include <iostream>
 
 
 /**
@@ -12,17 +14,32 @@
  */
 int NetworkingDriver::read_packet(void* buf, size_t buf_size) {
     if (_socket == -1) {
-        //TODO: Throw exception
+        throw "No Connection";
     }
-    return read(_socket, buf, buf_size); 
+
+    int bytes_read = read(_socket, buf, buf_size); 
+
+    if( bytes_read == 0 || bytes_read == -1){
+        throw "Client disconnect";
+    }else{
+        return bytes_read;
+    }
+    
 }
 
 
-void NetworkingDriver::send_packet(void* buf, size_t buf_size) {
+int NetworkingDriver::send_packet(void* buf, size_t buf_size) {
     if (_socket == -1) {
-        //TODO: Throw exception
+        throw "No Connection";
     }
-    send(_socket, buf, buf_size, 0);
+    
+    int bytes_send = send(_socket, buf, buf_size, 0);
+
+    if( bytes_send == 0 || bytes_send == -1){
+        throw "Client disconnect";
+    }else{
+        return bytes_send;
+    }
 }
 
 //TODO: Replace exits with throws to an exception

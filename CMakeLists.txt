@@ -14,3 +14,8 @@ add_executable(networkingTest src/networkingTest.cpp src/commands/LedCommand.cpp
 target_include_directories(Bullseye PRIVATE include)
 target_include_directories(pwmDebug PRIVATE include)
 target_include_directories(networkingTest PRIVATE include)
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(Bullseye Threads::Threads)
+target_link_libraries(networkingTest Threads::Threads)
