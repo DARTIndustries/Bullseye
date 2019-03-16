@@ -31,16 +31,16 @@ typedef struct {
 class SharedMemoryDriver {
 public:
 	/** Returns a pointer to a shared memory map. This pointer can freely be written to without locks */
-	static volatile location_shm_t *open_location_shm();
-	
+	volatile location_shm_t *open_location_shm();
+
 	/** This method detaches your process from the shared memory. 
 	   This call is not required as it will be detached when the process exits */
-	static void detach_location_shm(location_shm_t * shm);
+	void detach_location_shm(location_shm_t * shm);
 
 	/** This call destroys the shared memory. 
 	   It should only be called if all process are done with the shared memory
 	   This call is not required because the same map will be reused if it is not destroyed. 
 	*/
-	static void destroy_location_shm();
+	void destroy_location_shm();
 
 };
