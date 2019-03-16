@@ -18,7 +18,7 @@ int NetworkingDriver::read_packet(void* buf, size_t buf_size) {
     }
 
     int bytes_read = read(_socket, buf, buf_size); 
-
+    
     if( bytes_read == 0 || bytes_read == -1){
         throw "Client disconnect";
     }else{

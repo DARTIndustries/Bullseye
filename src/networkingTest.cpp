@@ -30,7 +30,6 @@ void heartbeat_thread(NetworkingDriver net_driver){
 
 int main(int argc, char const *argv[]) {
     char buffer[1024] = {0};
-
     NetworkingDriver net_driver;
     
     //Accept loop
