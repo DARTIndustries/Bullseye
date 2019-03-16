@@ -20,7 +20,7 @@ int main (int argc, char* argv[]) {
             printf("child|vect[1]: %f\n", loc_shm->position_vect[1]);
             printf("child|vect[2]: %f\n", loc_shm->position_vect[2]);
 
-            loc_shm->motor_values_id = position_vect_id;
+            loc_shm->motor_values_id = loc_shm->position_vect_id;
             loc_shm->motor_values[0] = loc_shm->position_vect[0];
             loc_shm->motor_values[1] = loc_shm->position_vect[1];
             loc_shm->motor_values[2] = loc_shm->position_vect[2];
