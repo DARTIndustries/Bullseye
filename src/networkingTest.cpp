@@ -22,37 +22,46 @@ void heartbeat_thread(NetworkingDriver net_driver){
 int main(int argc, char const *argv[]) {
     char buffer[1024];
 
+	// Removes the random characters at the end
+	memset (buffer, 0, sizeof buffer);
+
     NetworkingDriver net_driver;
     
+	net_driver.open_connection();
+
     while(true){
-        net_driver.open_connection();
         
         //spawn heartbeat thread
         // std::thread heartbeat (heartbeat_thread, net_driver);
         // std::cout << "main, foo and bar now execute concurrently...\n";
         // heartbeat.join();
 
-        while(true){
-            net_driver.read_packet(buffer, sizeof(buffer));
+		int i = net_driver.read_packet (buffer, sizeof (buffer));
 
-            std::cout << "READ: " << buffer << "\n";
+		if (i == 0) { // Client disconnected, exit
+			std::cout << "Connection closed\n";
+			net_driver.close_connection();
+			return 0;
+		} else { // Message received
+			std::cout << "READ: " << buffer << "\n";
 
-            //example of struct being sent
-            LedCommand led;
+			// Clears buffer
+			memset(buffer, 0, sizeof buffer);
 
-            led.b = 5;
-            led.r = 1;
-            led.g = 255;
+			char test_response[] = "Response\n";
+			net_driver.send_packet (&test_response, sizeof (test_response));
+		}
 
-            net_driver.send_packet(&led, sizeof(led));
-        }
-        
-        // net_driver.close_connection();
+        //example of struct being sent
+        /*LedCommand led;
+
+        led.b = 5;
+        led.r = 1;
+        led.g = 255;
+
+        net_driver.send_packet(&led, sizeof(led));*/
     }
     
-    
-
-
     //TODO: Close?
 
     // send(new_socket , hello , strlen(hello) , 0 ); 
