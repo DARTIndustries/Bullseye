@@ -21,7 +21,10 @@ void heartbeat_thread(NetworkingDriver net_driver){
             led.r = 1;
             led.g = 255;
 
+            // char* testMsg = "Hello World";
+
             net_driver.send_packet(&led, sizeof(led));
+            // net_driver.send_packet(&testMsg, sizeof(testMsg));
             sleep(1);
         }
     } catch (const char* msg){
@@ -33,7 +36,7 @@ void heartbeat_thread(NetworkingDriver net_driver){
 int main(int argc, char const *argv[]) {
     char buffer[1024] = {0};
     NetworkingDriver net_driver;
-    CommandUnion commUnion;
+    CommandUnion *commUnion;
 
     //Accept loop
     while(true) {
@@ -50,24 +53,44 @@ int main(int argc, char const *argv[]) {
 
                 int bytes_read = net_driver.read_packet (buffer, sizeof (buffer));
 
-                std::cout << "READ: " << buffer << "\n";
+                char type_buffer[4];
+
+                memcpy(&type_buffer, &buffer , 4*sizeof(int));
+
+                // uint32_t type = (uint32_t)buffer[0] << 24 |
+                //                 (uint32_t)buffer[1] << 16 |
+                //                 (uint32_t)buffer[2] << 8 | 
+                //                 (uint32_t)buffer[3];
+
+                // memcpy(buffer, type_buffer, 4*sizeof(int));
+
+
+                LedCommand led;
+
+                printf("*****************************\n");
+                printf("%d\n", atoi(type_buffer));
+                printf("%d\n", led.type);
+                printf("*****************************\n");
+                if (atoi(type_buffer) == (uint32_t)CommandType::LED_COMMAND) {
+                    printf("worked");
+                } else {
+                    printf("jose is bad");
+                }
                 
-                //read in first few bytes to get id, set id of union to that and then use the switch statement to determine what the shit is
 
-                // AbstractCommand *comm = (AbstractCommand*)buffer;
-                // //adding to union
-                // switch(*comm->type){
-                //     case (uint32_t)CommandType::LED_COMMAND : 
-                //         commUnion->led = *comm;
-                //         break;
-                //     case (uint32_t)CommandType::SERVO_COMMAND :
-                //         commUnion->servo = *comm;
-                //         break;
-                // }
+                // std::cout << "READ: " << buffer << "\n";
+                printf("READ: %s\n", &buffer[0]);
+                
+                //LedCommand *led = (LedCommand*)&buffer[0];
 
-                printf("Red: %u\n", commUnion.led->r);
-                printf("Green: %u\n", commUnion.led->g);
-                printf("Blue: %u\n", commUnion.led->b);
+                // commUnion = (CommandUnion*)&buffer[0];
+
+                // printf("Red: %u\n", commUnion->led.r);
+                // printf("Green: %u\n", commUnion->led.g);
+                // printf("Blue: %u\n", commUnion->led.b);
+
+                // printf("Servo Num: %u\n", commUnion->servo.servoNum);
+                // printf("Servo Pos: %f\n", commUnion->servo.position);
 
             }
         } catch (const char* msg) {

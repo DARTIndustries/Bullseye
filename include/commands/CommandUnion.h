@@ -7,7 +7,9 @@
 #include <cstdint>
 
 union CommandUnion {
-  uin32_t type;
+  uint32_t type;
   LedCommand led;
   ServoCommand servo;
+
+  CommandUnion () {}
 };
