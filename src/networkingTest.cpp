@@ -3,7 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <commands/CommandUnion.h>
 #include <commands/LedCommand.h>
+#include <commands/ServoCommand.h>
+#include <commands/AbstractCommand.h>
 #include <thread>
 #include <unistd.h>
 
@@ -14,7 +17,6 @@ void heartbeat_thread(NetworkingDriver net_driver){
         while(true) {
 
             LedCommand led;
-
             led.b = 5;
             led.r = 1;
             led.g = 255;
@@ -31,7 +33,8 @@ void heartbeat_thread(NetworkingDriver net_driver){
 int main(int argc, char const *argv[]) {
     char buffer[1024] = {0};
     NetworkingDriver net_driver;
-    
+    CommandUnion commUnion;
+
     //Accept loop
     while(true) {
         
@@ -48,6 +51,23 @@ int main(int argc, char const *argv[]) {
                 int bytes_read = net_driver.read_packet (buffer, sizeof (buffer));
 
                 std::cout << "READ: " << buffer << "\n";
+                
+                //read in first few bytes to get id, set id of union to that and then use the switch statement to determine what the shit is
+
+                // AbstractCommand *comm = (AbstractCommand*)buffer;
+                // //adding to union
+                // switch(*comm->type){
+                //     case (uint32_t)CommandType::LED_COMMAND : 
+                //         commUnion->led = *comm;
+                //         break;
+                //     case (uint32_t)CommandType::SERVO_COMMAND :
+                //         commUnion->servo = *comm;
+                //         break;
+                // }
+
+                printf("Red: %u\n", commUnion.led->r);
+                printf("Green: %u\n", commUnion.led->g);
+                printf("Blue: %u\n", commUnion.led->b);
 
             }
         } catch (const char* msg) {
