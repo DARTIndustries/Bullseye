@@ -34,7 +34,6 @@ void heartbeat_thread(NetworkingDriver net_driver){
 }
 
 int main(int argc, char const *argv[]) {
-    char buffer[1024] = {0};
     NetworkingDriver net_driver;
 
     //Accept loop
@@ -65,55 +64,12 @@ int main(int argc, char const *argv[]) {
 						printf ("unknown command: %i\n", commUnion.type);
 						break;
 				}
-
-                //char type_buffer[4];
-
-                //memcpy(&type_buffer, &buffer , 4*sizeof(int));
-
-                // uint32_t type = (uint32_t)buffer[0] << 24 |
-                //                 (uint32_t)buffer[1] << 16 |
-                //                 (uint32_t)buffer[2] << 8 | 
-                //                 (uint32_t)buffer[3];
-
-                // memcpy(buffer, type_buffer, 4*sizeof(int));
-
-
-                //LedCommand led;
-
-				/*
-                printf("*****************************\n");
-                printf("%d\n", atoi(type_buffer));
-                printf("%d\n", led.type);
-                printf("*****************************\n");
-                if (atoi(type_buffer) == (uint32_t)CommandType::LED_COMMAND) {
-                    printf("worked");
-                } else {
-                    printf("jose is bad");
-                }*/
-                
-
-                // std::cout << "READ: " << buffer << "\n";
-                //printf("READ: %s\n", &buffer[0]);
-                
-                //LedCommand *led = (LedCommand*)&buffer[0];
-
-                // commUnion = (CommandUnion*)&buffer[0];
-
-                // printf("Red: %u\n", commUnion->led.r);
-                // printf("Green: %u\n", commUnion->led.g);
-                // printf("Blue: %u\n", commUnion->led.b);
-
-                // printf("Servo Num: %u\n", commUnion->servo.servoNum);
-                // printf("Servo Pos: %f\n", commUnion->servo.position);
-
             }
         } catch (const char* msg) {
             std::cout << "Main: " << msg << std::endl;
         }
-
         std::cout << "Waiting for heartbeat thread to exit " << std::endl;
         heartbeat.join();
-
     }
 
     return 0; 
