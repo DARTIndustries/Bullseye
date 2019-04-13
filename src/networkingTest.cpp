@@ -36,7 +36,6 @@ void heartbeat_thread(NetworkingDriver net_driver){
 int main(int argc, char const *argv[]) {
     char buffer[1024] = {0};
     NetworkingDriver net_driver;
-    CommandUnion *commUnion;
 
     //Accept loop
     while(true) {
@@ -51,11 +50,25 @@ int main(int argc, char const *argv[]) {
             //Receive messages loop
             while(true) {
 
-                int bytes_read = net_driver.read_packet (buffer, sizeof (buffer));
+				CommandUnion commUnion;
 
-                char type_buffer[4];
+                int bytes_read = net_driver.read_packet (&commUnion, sizeof (commUnion));
 
-                memcpy(&type_buffer, &buffer , 4*sizeof(int));
+				switch (commUnion.type) {
+					case (uint32_t)CommandType::LED_COMMAND:
+						printf ("led command\n");
+						printf("Red: %u\n", commUnion.led.r);
+						printf("Green: %u\n", commUnion.led.g);
+						printf("Blue: %u\n", commUnion.led.b);
+						break;
+					default:
+						printf ("unknown command: %i\n", commUnion.type);
+						break;
+				}
+
+                //char type_buffer[4];
+
+                //memcpy(&type_buffer, &buffer , 4*sizeof(int));
 
                 // uint32_t type = (uint32_t)buffer[0] << 24 |
                 //                 (uint32_t)buffer[1] << 16 |
@@ -65,8 +78,9 @@ int main(int argc, char const *argv[]) {
                 // memcpy(buffer, type_buffer, 4*sizeof(int));
 
 
-                LedCommand led;
+                //LedCommand led;
 
+				/*
                 printf("*****************************\n");
                 printf("%d\n", atoi(type_buffer));
                 printf("%d\n", led.type);
@@ -75,11 +89,11 @@ int main(int argc, char const *argv[]) {
                     printf("worked");
                 } else {
                     printf("jose is bad");
-                }
+                }*/
                 
 
                 // std::cout << "READ: " << buffer << "\n";
-                printf("READ: %s\n", &buffer[0]);
+                //printf("READ: %s\n", &buffer[0]);
                 
                 //LedCommand *led = (LedCommand*)&buffer[0];
 
