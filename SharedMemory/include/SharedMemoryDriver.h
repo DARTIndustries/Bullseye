@@ -11,21 +11,13 @@
 /** This struct is stored in shared memory that is mapped by both the robot and location processes */
 typedef struct {
 	/* The id fields are used as debug flags for synchronization. 
-		motor_values_id=0 message matches up with the position_vect_id=0 message. 
 		The code will never use these for synchronization (we don't really care), but 
 		it is nice to see if one is falling behind the other, maybe even log about it. 
-
-		The idea being that position_vect_id is incremented linearly and motor_values_id is a 
-		snapshot of the position_vect_id that its calculation is based on. 
 	*/
 
 	/* These values are written only by the robot main process. They are read by location */
 	unsigned int position_vect_id;
-	double position_vect[3];
-
-	/* These values are written only by the location process. They are read by robot */
-	unsigned int motor_values_id;
-	double motor_values[8];
+	double position_vect[6];
 } location_shm_t;
 
 class SharedMemoryDriver {
