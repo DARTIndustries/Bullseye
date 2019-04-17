@@ -5,8 +5,74 @@
 #include <netinet/in.h> 
 #include <string.h> 
 #include <drivers/NetworkingDriver.h>
+#include <commands/ServoCommand.h>
+#include <commands/LedCommand.h>
+#include <commands/CommandUnion.h>
 #include <exception>
 #include <iostream>
+
+
+/**
+ * Reads on the opened socket into an internal buffer. 
+ * Returns a pointer to the internal buffer of the command union. 
+ * This memory should not be freed.
+ * Not re-enterent, not thread safe. 
+ */
+CommandUnion* NetworkingDriver::read_command() {
+    static char buf[1024]; 
+    static bool has_data = false;
+    static int bytes_used = 0;
+    static int bytes_read = 0;
+    if (_socket == -1) {
+        throw "No Connection";
+    }
+
+    /* Read until it returns valid data */
+    while(true) {
+        /* If the buffer is empty get more data */
+        if (!has_data) {
+            int leftovers = 0;
+            /* If there is data left in the buffer, copy it to the front. Should only be a few bytes */
+            if (bytes_used < bytes_read) {
+                leftovers = bytes_read - bytes_used;
+                memcpy(buf, buf + bytes_used, leftovers);
+            }
+            bytes_read = read(_socket, buf + leftovers, sizeof(buf) - leftovers); 
+
+            if (bytes_read == 0 || bytes_read == -1) {
+                    throw "Client disconnect";
+            }
+            bytes_read += leftovers; // Add leftovers at the front to the size
+            bytes_used = 0;
+            has_data = true;
+        }
+
+        if (bytes_read < 4) {
+            has_data = false;
+            continue;
+        }
+        
+        /* Switch to check size */
+        size_t com_size = 0;
+        switch (comm.type) {
+            case (uint32_t)CommandType::LED_COMMAND: com_size = sizeof(LedCommand); break;
+            case (uint32_t)CommandType::SERVO_COMMAND: com_size = sizeof(ServoCommand); break;
+            default: 
+                printf("Unknown Command Size!!!! Unrecoverable Error");
+                throw "Unknown Command Size";
+        }
+
+        if (bytes_read - bytes_used < sizeof(com_size)) {
+            has_data = false;
+            continue;
+        }
+
+        CommandUnion *comm = (CommandUnion*)buf + bytes_used;
+        bytes_used += com_size;
+        return comm;
+    }
+}
+
 
 
 /**

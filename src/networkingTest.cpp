@@ -48,20 +48,17 @@ int main(int argc, char const *argv[]) {
         try {
             //Receive messages loop
             while(true) {
+				CommandUnion *commUnion = net_driver.read_command();
 
-				CommandUnion commUnion;
-
-                int bytes_read = net_driver.read_packet (&commUnion, sizeof (commUnion));
-
-				switch (commUnion.type) {
+				switch (commUnion->type) {
 					case (uint32_t)CommandType::LED_COMMAND:
 						printf ("led command\n");
-						printf("Red: %u\n", commUnion.led.r);
-						printf("Green: %u\n", commUnion.led.g);
-						printf("Blue: %u\n", commUnion.led.b);
+						printf("Red: %u\n", commUnion->led.r);
+						printf("Green: %u\n", commUnion->led.g);
+						printf("Blue: %u\n", commUnion->led.b);
 						break;
 					default:
-						printf ("unknown command: %i\n", commUnion.type);
+						printf ("unknown command: %i\n", commUnion->type);
 						break;
 				}
             }
