@@ -63,7 +63,7 @@ CommandUnion* NetworkingDriver::read_command() {
                 throw "Unknown Command Size";
         }
 
-        if (bytes_read - bytes_used < sizeof(com_size)) {
+        if ((bytes_read - bytes_used) < com_size) {
             has_data = false;
             continue;
         }
