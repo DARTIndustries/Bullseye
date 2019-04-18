@@ -64,9 +64,12 @@ int main()
 
     //send(sock , hello , strlen(hello) , 0 ); 
     send(sock, &commUnion, sizeof(commUnion), 0);
+    send(sock, &commUnion, sizeof(commUnion), 0);
+    send(sock, &commUnion, sizeof(commUnion), 0);
     // std::cout << "Hello message sent\n" << std::endl;
     
     while(read( sock , buffer, sizeof(buffer)) != -1){
+      send(sock, &commUnion, sizeof(commUnion), 0);
       LedCommand *led = (LedCommand*)&buffer[0];
 
       printf("Red: %u\n", led->r);
