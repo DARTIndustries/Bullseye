@@ -55,7 +55,7 @@ CommandUnion* NetworkingDriver::read_command() {
         /* Switch to check size */
         CommandUnion *comm = (CommandUnion*)buf + bytes_used;
         size_t com_size = 0;
-        switch (comm.type) {
+        switch (comm->type) {
             case (uint32_t)CommandType::LED_COMMAND: com_size = sizeof(LedCommand); break;
             case (uint32_t)CommandType::SERVO_COMMAND: com_size = sizeof(ServoCommand); break;
             default: 
