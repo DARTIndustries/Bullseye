@@ -56,20 +56,19 @@ int main()
     // ServoCommand servo;
     // servo.position = 20;
     // servo.servoNum = 1;
-
-    commUnion.type = (uint32_t)CommandType::LED_COMMAND;
-    printf("%d\n",commUnion.type);
-    commUnion.led = led;
     // commUnion.servo = servo;
 
     //send(sock , hello , strlen(hello) , 0 ); 
-    send(sock, &commUnion, sizeof(commUnion), 0);
-    send(sock, &commUnion, sizeof(commUnion), 0);
-    send(sock, &commUnion, sizeof(commUnion), 0);
+    send(sock, &led, sizeof(LedCommand), 0);
+    send(sock, &led, sizeof(LedCommand), 0);
+    send(sock, &led, sizeof(LedCommand), 0);
     // std::cout << "Hello message sent\n" << std::endl;
     
     while(read( sock , buffer, sizeof(buffer)) != -1){
-      send(sock, &commUnion, sizeof(commUnion), 0);
+      send(sock, &led, sizeof(LedCommand), 0);
+
+      // TODO: This really  isn't correct, you are going to ignore 
+      //       a lot of commands since you won't always read just 1
       LedCommand *led = (LedCommand*)&buffer[0];
 
       printf("Red: %u\n", led->r);
