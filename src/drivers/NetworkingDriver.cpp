@@ -35,9 +35,11 @@ CommandUnion* NetworkingDriver::read_command() {
             /* If there is data left in the buffer, copy it to the front. Should only be a few bytes */
             if (bytes_used < bytes_read) {
                 leftovers = bytes_read - bytes_used;
+                printf("has %i leftovers \n", leftovers);
                 memcpy(buf, buf + bytes_used, leftovers);
             }
             bytes_read = read(_socket, buf + leftovers, sizeof(buf) - leftovers); 
+            printf("read %i bytes\n", bytes_read);
 
             if (bytes_read == 0 || bytes_read == -1) {
                     throw "Client disconnect";
@@ -48,6 +50,7 @@ CommandUnion* NetworkingDriver::read_command() {
         }
 
         if (bytes_read < 4) {
+            printf("less than 4 bytes\n");
             has_data = false;
             continue;
         }
@@ -62,8 +65,10 @@ CommandUnion* NetworkingDriver::read_command() {
                 printf("Unknown Command Size!!!! Unrecoverable Error");
                 throw "Unknown Command Size";
         }
+        printf("Com size %u\n", com_size);
 
         if ((bytes_read - bytes_used) < com_size) {
+            printf("Not enough bytes for command. Bytes read: %d, bytes used: %d \n", bytes_read, bytes_used);
             has_data = false;
             continue;
         }
